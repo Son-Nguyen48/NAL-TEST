@@ -1,25 +1,17 @@
+const arrCheck = ["aw", "aa", "dd", "ee", "oo", "ow", "w"];
 function detectVnLetter(input) {
-  const arrCheck = ["aw", "aa", "dd", "ee", "oo", "ow", "w"];
-
-  let count = 0;
   let result = [];
-
   for (let i = 0; i < input.length; i++) {
-    const currentLetter = input[i] + input[i + 1];
-    if (arrCheck.includes(input[i])) {
-      count++;
-      result.push(input[i]);
-    }
-    if (arrCheck.includes(currentLetter)) {
-      count++;
-      result.push(currentLetter);
-      i++;
+    const startWithW = input[i] === "w";
+    let checkedLetter = startWithW ? input[i] : input[i] + input[i + 1];
+    if (arrCheck.includes(checkedLetter)) {
+      result.push(checkedLetter);
     }
   }
 
-  return { count, result };
+  return new Set(result);
 }
 
-const input = "hfdawhwhcoowdd";
+const input = "hfdawhwhcoomddoow";
 const result = detectVnLetter(input);
-console.log(result.count, result.result);
+console.log(`${result.size} (${[...result].join(", ")})`);
